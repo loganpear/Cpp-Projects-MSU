@@ -127,7 +127,7 @@ int main() {
 
     std::cout << std::fixed << std::setprecision(2);
 
-    std::cout << " Set 1 Set 2\n";
+    std::cout << "                 Set 1          Set 2\n";
     std::cout << "------------------------------------------------\n";
     std::cout << "Count:          " << count_set1 << std::setw(16) << count_set2 << '\n';
     std::cout << "Mean:           " << mean1 << std::setw(16) << mean2 << '\n';
