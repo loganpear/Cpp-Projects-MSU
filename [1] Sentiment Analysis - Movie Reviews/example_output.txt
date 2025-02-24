@@ -1,0 +1,12 @@
+                 Set 1          Set 2
+------------------------------------------------
+Count:          16              10
+Mean:           6.96            6.72
+STDV:           0.85            0.80
+Min:            5.80            5.60
+Max:            8.40            8.20
+Pos:            9               5
+Neg:            5               4
+Inc:            2               1
+Overall Best Title: Raiders of the Lost Ark
+Overall Worst Title: The Dark Tower
