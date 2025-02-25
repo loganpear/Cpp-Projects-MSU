@@ -17,7 +17,8 @@ This project implements a sentiment analysis tool for movie reviews. It processe
 ### Attached Files  
 - `main.cpp`: The main C++ program implementing the sentiment analysis.  
 - `set1.csv`: Dataset 1 containing movie titles, years, ratings, and reviews.  
-- `set2.csv`: Dataset 2 containing additional movie data.  
+- `set2.csv`: Dataset 2 containing additional movie data.
+- `dictionary.txt`: Contains two comma-separated lists of words, where the first line represents positive words and the second line represents negative words, used for sentiment analysis of movie reviews.
 - `example_output.txt`: Sample output of the program for reference.  
 
 This project demonstrates proficiency in file I/O, data manipulation, and statistical analysis in C++.
