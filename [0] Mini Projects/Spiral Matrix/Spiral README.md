@@ -1,7 +1,3 @@
-Here's a short README file based on your explanation:
-
----
-
 # Spiral Matrix Solutions
 
 ## Overview
