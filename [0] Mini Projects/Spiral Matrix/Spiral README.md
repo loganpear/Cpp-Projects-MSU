@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains solutions to the **Spiral Matrix** problem, which is the task of filling a square matrix of size `n` with numbers in a spiral pattern, starting from the bottom-right corner and working towards the center.
+This folder contains 2 solutions to the **Spiral Matrix** problem, which is the task of filling a square matrix of size `n` with numbers in a spiral pattern, starting from the bottom-right corner and working towards the center.
 
 ### Problem Description:
 Given a size `n` (which is always an odd number), the goal is to fill an `n x n` matrix with values starting from the highest number (n^2 - 1) at the bottom-right corner, spiraling around, and ending with the value 0 at the center. The matrix should fill in such a way that each number is placed in the next available position according to the spiral pattern: left, up, right, and down.
