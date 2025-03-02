@@ -7,7 +7,6 @@
 #include <iomanip>     // for rounding
 #include <set>         // for getting unique containers
 
-// Function declarations
 void load_dictionary(const std::string &filename,
                      std::vector<std::string> &positiveWords,
                      std::vector<std::string> &negativeWords);
@@ -16,30 +15,40 @@ void load_dataset(const std::string &filename, std::vector<std::string> &titles,
                   std::vector<int> &years, std::vector<double> &ratings,
                   std::vector<std::string> &reviews);
 
-double calculate_mean(std::vector<double> const &ratings_vector, int const &n);
-
-double calculate_stdev(std::vector<double> const &ratings_vector,
-                       double const &mean, int const &n);
-
+// returns an index for where to find the lowest rating
 int find_the_minimums_index(std::vector<double> const &ratings_vector);
 
+// returns an index for where to find the highest rating
 int find_the_maximums_index(std::vector<double> const &ratings_vector);
 
+// Splits the review string into a vector of words. Delimiter = ' '
 std::vector<std::string> split_string_to_words(std::string const &review);
 
+// determines the counts of reviews in a dataset that are overall negative, 
+// positive, or inconclusive reviews based on the words in the review
 std::vector<int> sentiment_analysis(
     std::vector<std::string> const &reviews_vector,
     std::vector<std::string> const &positive_words,
     std::vector<std::string> const &negative_words);
 
+// this reveals the duplicate title reviews' indexes
 std::vector<int> find_multi_review_indexes(
     std::string const &title_in_question,
     std::vector<std::string> const &titles_vector);
 
+// alters to get a vector of unique titles and a vector of avg rating for each title
+// here i create a unique container of titles to iterate through before constructing 
+// the actually unique_titles vector which will be parallel to average_ratings
 void get_unique_titles_with_average_rating(
     std::vector<std::string> &unique_titles,
     std::vector<double> &averaged_ratings);
 
+/* 
+  here we combine all unique movies into one titles vector and one ratings vector
+  After we have all_titles and all_ratings vectors finished and parallel:
+  We find the minimum and maximum ratings values by first initializing them from 
+  all_ratings.at(0). Edge case: ties for best and worst rated title. 
+*/
 void get_best_and_worst_titles_overall(
     std::string &best_titles_output, std::string &worst_titles_output,
     std::vector<std::string> const &unique_titles1,
@@ -47,6 +56,9 @@ void get_best_and_worst_titles_overall(
     std::vector<std::string> const &unique_titles2,
     std::vector<double> const &average_ratings2);
 
+double calculate_mean(std::vector<double> const &ratings_vector, int const &n);
+double calculate_stdev(std::vector<double> const &ratings_vector,
+                       double const &mean, int const &n);
 
 int main() {
     // File paths
@@ -200,20 +212,18 @@ std::vector<std::string> split_string_to_words(std::string const &review) {
 
     for (char ch : review) {
         if (ch == ' ') {
-            if (word != "") {
+            if (!word.empty()) {
                 words_vector.push_back(word);
             }
-            word = "";
-
+            word.clear();
         } else if (ch == ',' or ch == '.') {
             continue;
-
         } else {
             word.push_back(std::tolower(static_cast<unsigned char>(ch)));
         }
     }
 
-    if (word != "") {
+    if (!word.empty()) {
         words_vector.push_back(word);
     }
     return words_vector;
@@ -223,6 +233,8 @@ std::vector<int> sentiment_analysis(
     std::vector<std::string> const &reviews_vector,
     std::vector<std::string> const &positive_words,
     std::vector<std::string> const &negative_words) {
+
+    // contains {positives count, negatives count, inconclusives count}
     std::vector<int> output_vector;
     int dataset_positives_count{0}, dataset_negatives_count{0},
         dataset_inconclusives_count{0};
@@ -236,17 +248,18 @@ std::vector<int> sentiment_analysis(
             for (std::string const &pos_word : positive_words) {
                 if (review_word == pos_word) {
                     review_positives_count++;
-                    break;
+                    break;  // this saves a little compute so it doesnt keep searching
                 }
             }
             for (std::string const &neg_word : negative_words) {
                 if (review_word == neg_word) {
                     review_negatives_count++;
-                    break;
+                    break;  // this saves a little compute
                 }
             }
         }
 
+        // after the whole review has been run through:
         if (review_positives_count > review_negatives_count) {
             dataset_positives_count++;
         } else if (review_negatives_count > review_positives_count) {
@@ -288,16 +301,19 @@ void get_unique_titles_with_average_rating(
             find_multi_review_indexes(title, unique_titles);
         int num_indexes = indexes_of_title.size();
 
-        if (num_indexes > 1) {
+        if (num_indexes > 1) {  // if true, then there are duplicates
             double sum_all_ratings = 0.0;
 
+            // get the average of all occurrences of this title's rating
             for (int index : indexes_of_title) {
                 sum_all_ratings += averaged_ratings.at(index);
             }
             double average_rating = sum_all_ratings / num_indexes;
 
+            // replace the first instance with the calculated average
             averaged_ratings.at(indexes_of_title.at(0)) = average_rating;
 
+            // Remove duplicate occurrences by iterating backwards to avoid index shifting
             for (int i = num_indexes - 1; i > 0; --i) {
                 int remove_index = indexes_of_title.at(i);
                 unique_titles.erase(unique_titles.begin() + remove_index);
@@ -313,11 +329,11 @@ void get_best_and_worst_titles_overall(
     std::vector<double> const &average_ratings1,
     std::vector<std::string> const &unique_titles2,
     std::vector<double> const &average_ratings2) {
+
     std::vector<std::string> all_titles = unique_titles1;
     std::vector<double> all_ratings = average_ratings1;
 
     int num_records_in_set2 = unique_titles2.size();
-
     for (int i = 0; i < num_records_in_set2; i++) {
         std::string current_title_of_set2 = unique_titles2.at(i);
         double current_rating_of_set2 = average_ratings2.at(i);
@@ -331,6 +347,8 @@ void get_best_and_worst_titles_overall(
     double max_rating = all_ratings.at(0);
     int num_total_records = all_ratings.size();
 
+    // note we already processed when index = 0 above for initialization
+    // so we start at i = 1
     for (int i = 1; i < num_total_records; i++) {
         if (all_ratings.at(i) < min_rating) {
             min_rating = all_ratings.at(i);
@@ -417,7 +435,7 @@ void load_dataset(const std::string &filename, std::vector<std::string> &titles,
     int year;
     double rating;
     std::string temp;
-    getline(file, line);
+    getline(file, line);  // Skip the first line of the datasets (headers)
 
     while (getline(file, line)) {
         std::stringstream ss(line);
