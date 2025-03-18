@@ -2,7 +2,7 @@
 
 This repository contains a collection of C++ projects completed as part of coursework through Michigan State University - CSE 232.  
 
-## Project 1: Sentiment Analysis - Movie Reviews  
+## Project 1: Movie Reviews Classification - Sentiment Analysis
 
 ### Overview  
 This project implements a sentiment analysis tool for movie reviews. It processes two datasets of movie reviews (`set1.csv` and `set2.csv`) and analyzes them using a dictionary of positive and negative words (`dictionary.txt`). The program calculates statistical metrics such as mean, standard deviation, and sentiment counts (positive, negative, and inconclusive reviews). It also identifies the best and worst-rated movies across the datasets.  
