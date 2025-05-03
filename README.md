@@ -81,3 +81,30 @@ g++ -std=c++20 -Wall main.cpp ppmio.cpp && ./a.out car.ppm out.ppm -i -x -m
   Outputs the processed image data into a properly formatted binary `.ppm` file.
 
 This project demonstrates proficiency in advanced file I/O, 2D vector manipulations, command-line interface parsing, and algorithmic image processing techniques in C++.
+
+---
+
+## Project 3: AI Game Agent – Autonomous Decision-Making in a Grid-Based Game  
+
+### Overview  
+This project centers on implementing an AI agent that autonomously navigates a grid-based game environment using strategic decision-making logic. The game includes various stage types such as mazes, open fields, and trap zones. The agent must make real-time movement decisions based on a limited visibility window, internal memory, and environment cues.
+
+Only the AI logic was developed by the student (see `brain.cpp` and `brain.h`), while all other supporting files—including the game engine, map files, and interface headers—were provided by Michigan State University's CSE 232 course.  
+
+### Key Features  
+- **Autonomous Agent Behavior**: Implements logic to navigate the map, avoid traps, and pursue goals using local observations.
+- **Environment Awareness**: Leverages a memory map to recall previously seen locations and adjust strategy accordingly.
+- **Custom Movement Logic**: Includes specialized logic (`xGamesMoveAlg`) to handle complex stage-specific movement behavior.
+- **Minimal Input Interface**: Uses the provided `GameState` structure to interpret current surroundings and decide on the next move.
+
+### Attached Files  
+- `brain.cpp`: Contains the AI movement logic and decision algorithms.
+- `brain.h`: Declares the `Brain` class interface and movement-related utilities.
+- All other files (e.g., `main.cpp`, `game.h`, `enemy.cpp`, `.map` files): Provided by CSE 232 instructional staff and not authored by the student.
+
+### Technical Highlights  
+- Decision-making is based on visibility constraints and spatial reasoning.
+- AI logic is stage-aware, adapting movement strategy depending on map configuration.
+- Demonstrates real-time interaction between AI behavior and game state updates.
+
+This project demonstrates proficiency in AI agent modeling, decision logic under partial observability, and integration with pre-built game systems in C++.  
